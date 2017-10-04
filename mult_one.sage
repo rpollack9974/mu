@@ -1,10 +1,15 @@
 def check_mult_one(N):
+	filename = "mu_data.txt"
+
 	assert is_prime(N),"input must be prime"
 	qs = (N-1).factor()
 	for d in qs:
 		p = d[0]
 		if p > 3:
-			print " Working with (N,p)=",(N,p)
+			print "Working with (N,p)=",(N,p)
+			F = open(filename,'a')
+			F.write("Working with (N,p)="+str((N,p))+" --- ")
+			F.close()
 			M = ModularSymbols(N*p,2,1)
 			for q in list(primes(50))+[N,p]:
 				Tq = M.hecke_operator(q)
@@ -13,3 +18,12 @@ def check_mult_one(N):
 				else:
 					M = (Tq-1).kernel()
 			print "  dimension is",M.dimension()
+			F = open(filename,'a')
+			F.write("dimension is "+str(M.dimension())+'\n')
+			F.close()
+			if M.dimension() > 1:
+				print "****************************************************"
+				F = open(filename,'a')
+				F.write("****************************************************"+'\n')
+				F.close()
+
