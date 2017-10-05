@@ -64,17 +64,27 @@ def rank1(chi,minp,maxp):
 				if chi.conductor()>1:
 					while (M.hecke_polynomial(q).derivative().substitute(chip(q)*q^(k-1)+1)==0) and (q<20):
 						print "  FAILED AT ",q
-						q=next_prime(q)
-					if q<20:
 						F = open(filename,'a')
-						F.write(" --- rank 1\n")
+						F.write("\n  FAILED AT "+str(q))
 						F.close()
+						q=next_prime(q)
+					F = open(filename,'a')
+					if q<20:
+						F.write(" --- rank 1\n")
+					else:
+						F.write("\n")
+					F.close()
 				else:
 					while (M.hecke_polynomial(q).derivative().substitute(q^(k-1)+1)==0) and (q<20):
 						print "  FAILED AT ",q
-						q=next_prime(q)
-					if q<20:
 						F = open(filename,'a')
-						F.write(" --- rank 1\n")
+						F.write("\n  FAILED AT "+str(q))
 						F.close()
+						q=next_prime(q)
+					F = open(filename,'a')
+					if q<20:
+						F.write(" --- rank 1\n")
+					else:
+						F.write("\n")
+					F.close()
 				del(M)
