@@ -1,0 +1,46 @@
+function check_mult_one(N:max_prime:=20,verbose:=false):
+	filename := "mu_data.txt";
+
+	qs := Factorization(N-1);
+	for d in [1..#qs] do
+		p := qs[d][1];
+		if p gt 3 then
+			print "Working with (N,p)=",(N,p);
+			PrintFile(filename,"Working with (N,p)=");
+			PrintFile(filename,(N,p));
+			PrintFile(filename," --- ");
+			M := ModularSymbols(N*p,2,1);
+			v := [p,N]; 
+			q := 1;
+			while q lt max_prime do
+				v := v + [q];
+				q := NextPrime(q);
+			end while;
+			r := 1;
+			while Dimension(M) ne 1 and r le #v do
+				q := v[r];
+				r := r + 1;
+				if verbose then
+					print "  Computing T_",q;
+				end if;
+				Tq := HeckeOperator(M,q);
+				if verbose then
+					print "  Computing kernel";
+				end if;
+				if Gcd(q,N*p) eq 1 then
+					M := (Tq-q-1).kernel();
+				else
+					M := (Tq-1).kernel();
+				end if;
+			end while;
+			print "--> dimension is",Dimension(M),"<--";
+			PrintFile(filename,"dimension is ");
+			PrintFile(filename,Dimension(M));
+			if Dimension(M) gt 1 then
+				print "****************************************************";
+				PrintFile(filename,"****************************************************");
+			end if;
+		end if;
+	end for;
+end function;
+
