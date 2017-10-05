@@ -1,7 +1,7 @@
 """Looks at T_p acting on S_k(chi) for (p,k) an irregular pair, and checks to see if there is any 
 eigenvalue defined over Z_p which is congruent to 1 mod p^2 -- same as above but computes MS over Q and then coerces to Qp"""
 def ap_minus_1(chi,minp,maxp):
-	filename = "val_ap_minus_1.N=5.txt"
+	filename = "val_ap_minus_1.N="+str(chi.conductor())+".txt"
 	F = open(filename,'a')
 	F.write("Working with character of conductor "+str(chi.conductor())+"\n"+"\n")
 	F.close()
@@ -22,6 +22,7 @@ def ap_minus_1(chi,minp,maxp):
 					fs = f.factor()
 					S.<y>=PolynomialRing(Qp(p,10))
 					for g in fs:
+						print g[0]
 						R=S(g[0]).roots()
 						for r in R:
 							s = r[0]
