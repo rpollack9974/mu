@@ -36,7 +36,7 @@ def check_mult_one(N,max_p=100,max_hecke_prime=20,verbose=false):
 			else:
 				print "Bailing on (N,p)=",(N,p)
 				F = open(filename,'a')
-				F.write("Bailing on (N,p)="+str((N,p)))
+				F.write("Bailing on (N,p)="+str((N,p))+"\n")
 				F.close()
 
 
