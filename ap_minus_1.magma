@@ -1,5 +1,5 @@
-"""Looks at T_p acting on S_k(SL_2(Z)) for (p,k) an irregular pair, and checks to see if there is any 
-eigenvalue defined over Z_p which is congruent to 1 mod p^2"""
+//Looks at T_p acting on S_k(SL_2(Z)) for (p,k) an irregular pair, and checks to see if there is any 
+//eigenvalue defined over Z_p which is congruent to 1 mod p^2
 function val_of_ap_minus_1(minp,maxp)
 	filename := "val_of_ap_minus_1.txt";
 	ps := [];
