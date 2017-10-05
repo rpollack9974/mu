@@ -13,7 +13,7 @@ function check_mult_one(N:max_prime:=20,verbose:=false)
 			v := [p,N]; 
 			q := 1;
 			while q lt max_prime do
-				v := v + [q];
+				v := v cat [q];
 				q := NextPrime(q);
 			end while;
 			r := 1;
