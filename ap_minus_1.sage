@@ -34,3 +34,47 @@ def ap_minus_1(chi,minp,maxp):
 									F.write(" --- there is a root congruent to 1 modulo p^"+str(e)+"\n")
 									F.close()
 					del(M)
+
+##Tries to see if the cuspidal Hida algebra at eisenstein ideal has rank 1
+## need to enter chi a Z-valued character
+def rank1(chi,minp,maxp):
+	filename = "rank1_data.N="+str(chi.conductor())+".txt"
+	ps=prime_range(minp,maxp)
+	for j in range(0,len(ps)):
+		p=ps[j]
+		for k in range(1,p):
+			if chi.conductor()>1:
+				Bk = chi.base_extend(QQ).bernoulli(k)
+			else:
+				Bk = bernoulli(k)
+			if Bk!=0 and Bk.valuation(p)>0:
+				print "Working with ",(p,k)
+				F = open(filename,'a')
+				F.write("Working with "+str((p,k)))
+				F.close()
+				if chi.conductor()>1:
+					chip = chi.base_extend(GF(p))
+					M=ModularSymbols(chip,k,1,GF(p)).cuspidal_subspace()
+				else:
+					chip = chi
+					M=ModularSymbols(1,k,1,GF(p)).cuspidal_subspace()
+				q=2
+				#print M.hecke_polynomial(q).substitute(q^(irr-1)+1)
+				#print M.hecke_polynomial(q).derivative().substitute(q^(irr-1)+1)
+				if chi.conductor()>1:
+					while (M.hecke_polynomial(q).derivative().substitute(chip(q)*q^(k-1)+1)==0) and (q<20):
+						print "  FAILED AT ",q
+						q=next_prime(q)
+					if q<20:
+						F = open(filename,'a')
+						F.write(" --- rank 1\n")
+						F.close()
+				else:
+					while (M.hecke_polynomial(q).derivative().substitute(q^(k-1)+1)==0) and (q<20):
+						print "  FAILED AT ",q
+						q=next_prime(q)
+					if q<20:
+						F = open(filename,'a')
+						F.write(" --- rank 1\n")
+						F.close()
+				del(M)
