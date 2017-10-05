@@ -12,7 +12,7 @@ def check_mult_one(N,max_p=100,max_hecke_prime=20,verbose=false):
 				F.write("Working with (N,p)="+str((N,p))+" --- ")
 				F.close()
 				M = ModularSymbols(N*p,2,1)
-				v = [p,N] + list(primes(max_prime))
+				v = [p,N] + list(primes(max_hecke_prime))
 				r = 0
 				while M.dimension()!=1 and r<len(v):
 					q = v[r]
