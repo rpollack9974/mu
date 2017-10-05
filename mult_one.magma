@@ -5,9 +5,9 @@ function check_mult_one(N:max_prime:=20,verbose:=false)
 	for d in [1..#qs] do
 		p := qs[d][1];
 		if p gt 3 then
-			print "Working with (N,p)=",(N,p);
+			print "Working with (N,p)=",[N,p];
 			PrintFile(filename,"Working with (N,p)=");
-			PrintFile(filename,(N,p));
+			PrintFile(filename,[N,p]);
 			PrintFile(filename," --- ");
 			M := ModularSymbols(N*p,2,1);
 			v := [p,N]; 
