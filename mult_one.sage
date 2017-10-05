@@ -11,15 +11,19 @@ def check_mult_one(N,max_prime=20,verbose=false):
 			F.write("Working with (N,p)="+str((N,p))+" --- ")
 			F.close()
 			M = ModularSymbols(N*p,2,1)
-			for q in list(primes(max_prime))+[N,p]:
+			v = [p,N] + list(primes(max_prime))
+			r = 0
+			while M.dimension()!=1 and r<len(v):
+				q = v[r]
+				r += 1
 				if verbose:
-					print q
+					print "  Computing T_",q
 				Tq = M.hecke_operator(q)
 				if gcd(q,N*p)==1:
 					M = (Tq-q-1).kernel()
 				else:
 					M = (Tq-1).kernel()
-			print "  dimension is",M.dimension()
+			print "--> dimension is",M.dimension(),"<--"
 			F = open(filename,'a')
 			F.write("dimension is "+str(M.dimension())+'\n')
 			F.close()
