@@ -22,8 +22,7 @@ def ap_minus_1(chi,minp,maxp):
 					fs = f.factor()
 					S.<y>=PolynomialRing(Qp(p,10))
 					for g in fs:
-						print g[0]
-						R=S(g[0]).roots()
+						R=S(g[0]/y^(g[0].valuation())).roots()
 						for r in R:
 							s = r[0]
 							e = (s-1).valuation()
