@@ -1,4 +1,4 @@
-function check_mult_one(N:max_prime:=20,verbose:=false):
+function check_mult_one(N:max_prime:=20,verbose:=false)
 	filename := "mu_data.txt";
 
 	qs := Factorization(N-1);
@@ -28,9 +28,9 @@ function check_mult_one(N:max_prime:=20,verbose:=false):
 					print "  Computing kernel";
 				end if;
 				if Gcd(q,N*p) eq 1 then
-					M := (Tq-q-1).kernel();
+					M := Kernel(Tq-q-1);
 				else
-					M := (Tq-1).kernel();
+					M := Kernel(Tq-1);
 				end if;
 			end while;
 			print "--> dimension is",Dimension(M),"<--";
