@@ -1,4 +1,4 @@
-def check_mult_one(N):
+def check_mult_one(N,max_prime=20,verbose=false):
 	filename = "mu_data.txt"
 
 	assert is_prime(N),"input must be prime"
@@ -11,7 +11,9 @@ def check_mult_one(N):
 			F.write("Working with (N,p)="+str((N,p))+" --- ")
 			F.close()
 			M = ModularSymbols(N*p,2,1)
-			for q in list(primes(50))+[N,p]:
+			for q in list(primes(max_prime))+[N,p]:
+				if verbose:
+					print q
 				Tq = M.hecke_operator(q)
 				if gcd(q,N*p)==1:
 					M = (Tq-q-1).kernel()
