@@ -1,11 +1,11 @@
-def check_mult_one(N,max_prime=20,verbose=false):
+def check_mult_one(N,max_p=100,max_hecke_prime=20,verbose=false):
 	filename = "mu_data.txt"
 
 	assert is_prime(N),"input must be prime"
 	qs = (N-1).factor()
 	for d in qs:
 		p = d[0]
-		if p > 3:
+		if p > 3 and p < max_p:
 			print "Working with (N,p)=",(N,p)
 			F = open(filename,'a')
 			F.write("Working with (N,p)="+str((N,p))+" --- ")
