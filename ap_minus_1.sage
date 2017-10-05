@@ -22,13 +22,15 @@ def ap_minus_1(chi,minp,maxp):
 					fs = f.factor()
 					S.<y>=PolynomialRing(Qp(p,10))
 					for g in fs:
-						R=S(g[0]/y^(g[0].valuation())).roots()
-						for r in R:
-							s = r[0]
-							e = (s-1).valuation()
-							if e>0:
-								print " There is a root congruent to 1 modulo p ^",e
-								F = open(filename,'a')
-								F.write(" --- there is a root congruent to 1 modulo p^"+str(e)+"\n")
-								F.close()
+						pol = S(g[0]).quo_rem(y^(S(g[0]).valuation()))[0]
+						if pol.degree()>0:
+							R=pol.roots()
+							for r in R:
+								s = r[0]
+								e = (s-1).valuation()
+								if e>0:
+									print " There is a root congruent to 1 modulo p ^",e
+									F = open(filename,'a')
+									F.write(" --- there is a root congruent to 1 modulo p^"+str(e)+"\n")
+									F.close()
 					del(M)
