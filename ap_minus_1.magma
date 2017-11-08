@@ -1,20 +1,32 @@
+function generalized_Bernoulli(n,chi)
+	f := Conductor(chi);
+	ans := 0;
+	Bn := BernoulliPolynomial(n);
+	for a in [1..f] do
+		ans := ans + chi(a)*Evaluate(Bn,a/f);
+	end for;	
+
+	return f^(n-1) * ans;
+end function;
+
 //Looks at T_p acting on S_k(SL_2(Z)) for (p,k) an irregular pair, and checks to see if there is any 
 //eigenvalue defined over Z_p which is congruent to 1 mod p^2
-function val_of_ap_minus_1(minp,maxp)
-	filename := "val_of_ap_minus_1.txt";
+function val_of_ap_minus_1(chi,minp,maxp)
+	N := Conductor(chi);
+	filename := "val_ap-1.N="+IntegerToString(N)+".txt";
 	ps := [];
 	for q in [minp..maxp] do
-		if IsPrime(q) then
+		if IsPrime(q) and (N mod p ne 0) then
 			ps := ps cat [q];
 		end if;
 	end for;
 	for j in [1..#ps] do
 		p := ps[j];
 		for k in [2..p] do
-			if k mod 2 eq 0 and Valuation(BernoulliNumber(k),p) gt 0 then
+			if (-1)^k eq chi(-1) and Valuation(generalized_Bernoulli(k,chi),p) gt 0 then
 				print "working with ",[p,k];
 				PrintFile(filename,"Working with irregular pair (" cat IntegerToString(p) cat "," cat IntegerToString(k) cat ")");
-				M := CuspidalSubspace(ModularSymbols(1,k,1));
+				M := CuspidalSubspace(ModularSymbols(chi,k,1));
 				S<y> := PolynomialRing(pAdicField(p,3));
 				f := S!(HeckePolynomial(M,p));
 				rs := Roots(f);
